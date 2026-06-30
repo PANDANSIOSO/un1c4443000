@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canal Panda Ansioso | Downloads</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background-color: #0b0f19; 
+            color: #ffffff; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 15px; 
+        }
+        
+        .ad-container {
+            width: 100%;
+            max-width: 100%;
+            margin: 10px 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .ad-container iframe,
+        .ad-container ins,
+        .ad-container div {
+            max-width: 100% !important;
+            margin: 0 auto !important;
+            display: inline-block !important;
+            text-align: center !important;
+        }
+        
+        .ad-728x90 { min-height: 90px; }
+        .ad-300x250 { min-height: 250px; }
+        .ad-320x50 { min-height: 50px; }
+        
+        .card { 
+            background: linear-gradient(135deg, #111827 0%, #1f2937 100%); 
+            border: 3px solid #39ff14; 
+            box-shadow: 0 0 25px rgba(57, 255, 20, 0.2); 
+            border-radius: 20px; 
+            width: 100%; 
+            max-width: 480px; 
+            padding: 30px 20px; 
+            text-align: center; 
+        }
+        h1 { font-size: 24px; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; margin-top: 10px; }
+        .channel-name { color: #39ff14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
+        p.subtitle { color: #9ca3af; font-size: 14px; margin-bottom: 20px; }
+        
+        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 2px solid #0077ff; box-shadow: 0 0 15px rgba(0, 119, 255, 0.3); margin-bottom: 20px; background: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        /* SEÇÃO DE SUGESTÕES */
+        .sugestoes-titulo { font-size: 14px; color: #39ff14; text-align: left; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .sugestoes-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
+        .sugestao-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; text-decoration: none; }
+        .sugestao-item:hover { border-color: #0077ff; transform: translateY(-2px); }
+        .sugestao-thumb { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; }
+        .sugestao-text { font-size: 10px; color: #fff; padding: 6px; text-align: left; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 32px; }
+        
+        .btn-ver-mais { background: transparent; border: 1px solid #0077ff; color: #0077ff; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-bottom: 20px; transition: 0.2s; text-transform: uppercase; display: none; width: 100%; text-align: center; }
+        .btn-ver-mais:hover { background: #0077ff; color: #fff; box-shadow: 0 0 10px rgba(0, 119, 255, 0.4); }
+
+        .arquivos-container { display: flex; flex-direction: column; gap: 15px; text-align: left; width: 100%; margin: 15px 0; }
+        
+        .item-download-box { position: relative; width: 100%; min-height: 58px; background: rgba(255,255,255,0.02); border-radius: 8px; }
+        
+        .btn-download { 
+            display: flex; align-items: center; justify-content: space-between; width: 100%; height: 58px; padding: 0 18px;
+            font-size: 14px; font-weight: bold; border: none; cursor: pointer; border-radius: 8px;
+            transition: all 0.3s ease; 
+            background: #1f2937; color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .btn-download:hover { background: #2d3748; transform: translateX(2px); }
+        
+        .badge-download {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border: 2px solid #39ff14;
+            border-radius: 6px;
+            color: #39ff14;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 800;
+            background: transparent;
+            box-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
+        }
+
+        .progress-container { display: none; width: 100%; height: 58px; background: #111827; border-radius: 8px; position: relative; border: 2px solid #39ff14; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: #39ff14; transition: width 0.1s linear; }
+        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 13px; color: #fff; text-shadow: 0 0 5px #000; text-transform: uppercase; width: 100%; text-align: center; }
+
+        /* SEÇÃO SOCIAL MEDIA (HORIZONTAL & ÍCONES OFICIAIS) */
+        .social-title { font-size: 13px; color: #0077ff; font-weight: bold; margin-top: 25px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
+        .social-container { display: flex; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 5px; }
+        .social-btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-width: 0; height: 42px; font-size: 10px; font-weight: bold; border-radius: 8px; text-decoration: none; color: #fff; transition: all 0.2s ease; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .social-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+        .social-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
+        
+        .btn-tiktok { background: #000000; border: 1px solid #ff0050; }
+        .btn-tiktok:hover { background: #ff0050; border-color: #ff0050; color: #fff; }
+        
+        .btn-telegram-group { background: #1f2937; border: 1px solid #0088cc; color: #0088cc; }
+        .btn-telegram-group:hover { background: #0088cc; color: #fff; }
+        
+        .btn-telegram-profile { background: #0088cc; border: 1px solid #0088cc; }
+        .btn-telegram-profile:hover { background: #0077b3; border-color: #0077b3; }
+
+        .footer { margin-top: 25px; font-size: 11px; color: #4b5563; }
+        @media (max-width: 480px) { 
+            body { padding: 10px; } 
+            .card { padding: 20px 15px; border-radius: 15px; } 
+            h1 { font-size: 20px; } 
+            .social-btn { font-size: 9px; gap: 4px; height: 40px; }
+            .social-btn svg { width: 14px; height: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ad-container ad-728x90">
+        <script>
+            atOptions = {
+                'key' : '0090fc855bce8fb389926eabcc55ed1f',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/0090fc855bce8fb389926eabcc55ed1f/invoke.js"></script>
+    </div>
+    <div class="card">
+        <h1><span class="channel-name">Canal Panda Ansioso</span></h1>
+        <p class="subtitle">Conteúdo exclusivo de Custom ROMs e Otimização.</p>
+
+        <div class="video-container">
+            <iframe id="playerAleatorio" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <div class="sugestoes-titulo">💡 Recomendados para você:</div>
+        <div class="sugestoes-container" id="sugestoesContainer"></div>
+        <button id="btnVerMaisSugs" class="btn-ver-mais" onclick="alternarVisibilidadeSugestoes()">Ver Mais</button>
+
+
+    <div class="ad-container ad-320x50">
+        <script>
+            atOptions = {
+                'key' : '41eb470e322f84ddcbac2a56ee7c4ef5',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/41eb470e322f84ddcbac2a56ee7c4ef5/invoke.js"></script>
+    </div>
+
+    <script async="async" data-cfasync="false" src="https://pl29740469.effectivecpmnetwork.com/94f71d23e1cb7f5455caa2e345da6d0b/invoke.js"></script>
+    <div id="container-94f71d23e1cb7f5455caa2e345da6d0b"></div>
+        <div class="arquivos-container" id="listaArquivosContainer"></div>
+
+        <div class="footer-anuncios"></div>
+
+        <div class="social-title">📱 Siga minhas redes sociais:</div>
+        <div class="social-container">
+            <a href="https://www.tiktok.com/@pandaansioso?_r=1&_t=ZS-97GZMXNT6pw" target="_blank" class="social-btn btn-tiktok">
+                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.05 1.62 4.2 1.21 1.4 3 2.16 4.75 2.38v3.86c-1.78.13-3.56-.34-4.93-1.48-.48-.4-.89-.88-1.22-1.42v6.75c.04 3.11-1.63 6.13-4.48 7.42-3.12 1.48-7.07.67-9.33-1.92-2.31-2.61-2.34-6.73-.08-9.38 1.95-2.35 5.25-3.3 8.16-2.4v3.93c-1.69-.53-3.61-.05-4.83 1.15-1.42 1.37-1.54 3.78-.27 5.3 1.25 1.55 3.65 1.83 5.23.64 1.15-.84 1.74-2.27 1.65-3.71V0z"/></svg>
+                TikTok
+            </a>
+            <a href="https://t.me/r8q_BR" target="_blank" class="social-btn btn-telegram-group">
+                <svg viewBox="0 0 24 24"><path d="M11.944 0C5.344 0 0 5.344 0 12c0 6.656 5.344 12 11.944 12 6.656 0 12-5.344 12-12 0-6.656-5.344-12-12-12zm5.892 8.244l-1.944 9.144c-.144.66-.54 1.02-1.092.708l-2.964-2.184-1.428 1.38c-.156.156-.288.288-.588.288l.216-3.048 5.556-5.028c.24-.216-.048-.336-.372-.12l-6.864 4.32-2.952-.924c-.648-.204-.66-.648.132-.96l11.532-4.452c.54-.204 1.008.12.876.876z"/></svg>
+                Grupo
+            </a>
+            <a href="https://t.me/PANDA_ANSIOSO" target="_blank" class="social-btn btn-telegram-profile">
+                <svg viewBox="0 0 24 24"><path d="M11.944 0C5.344 0 0 5.344 0 12c0 6.656 5.344 12 11.944 12 6.656 0 12-5.344 12-12 0-6.656-5.344-12-12-12zm5.892 8.244l-1.944 9.144c-.144.66-.54 1.02-1.092.708l-2.964-2.184-1.428 1.38c-.156.156-.288.288-.588.288l.216-3.048 5.556-5.028c.24-.216-.048-.336-.372-.12l-6.864 4.32-2.952-.924c-.648-.204-.66-.648.132-.96l11.532-4.452c.54-.204 1.008.12.876.876z"/></svg>
+                Perfil
+            </a>
+        </div>
+
+        <div class="footer">&copy; 2026 Canal Panda Ansioso - Todos os direitos reservados.</div>
+    </div>
+
+    <div class="ad-container ad-300x250">
+        <script>
+            atOptions = {
+                'key' : '649e8619ac522c5b495c01e468041d0e',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script src="https://www.highperformanceformat.com/649e8619ac522c5b495c01e468041d0e/invoke.js"></script>
+    </div>
+
+    <script src="https://pl29725634.effectivecpmnetwork.com/6f/9b/2c/6f9b2c7ad1c7f92594d3d5e23ae29dd6.js"></script>
+    <script>
+        const listaVideos = [
+          "QXJPVtfV8S8",
+          "KGxZK9I79RQ",
+          "jKoM0eKkJCo",
+          "TjYQ1iUuMlA",
+          "MWQ3iiY-qvI",
+          "_E906DAWdpw",
+          "JWRFqQPIydw",
+          "2588HbuLrtA"
+            ];
+        const listaProdutos = [
+          "https://s.shopee.com.br/4qDQZzlLe5",
+          "https://s.shopee.com.br/7VEBkbMT81",
+          "https://s.shopee.com.br/60PNxnGBxT",
+          "https://s.shopee.com.br/902lACp5sm",
+          "https://s.shopee.com.br/3LOOPkKx93",
+          "https://s.shopee.com.br/60P9acpCqm",
+          "https://s.shopee.com.br/40e5CvfcpC",
+          "https://s.shopee.com.br/6VLQBUFJj5",
+          "https://s.shopee.com.br/1gGAQYhaiv",
+          "https://s.shopee.com.br/2qS7oj7XmR",
+          "https://s.shopee.com.br/3LOOPgZUce"
+            ];
+        const arquivosCadastrados = [
+          {
+                    "nome": "Un1ca 3.0.0",
+                    "link": "https://t.me/unicarom"
+          },
+          {
+                    "nome": "Twrp-3.7.1_12-5 (versão atualizada não ofc) + Vb meta",
+                    "link": "https://drive.google.com/drive/folders/1TFfsw590NKwi-3CDxZ2glZHPl14ad923?usp=sharing"
+          },
+          {
+                    "nome": "Site Twrp",
+                    "link": "https://twrp.me/"
+          },
+          {
+                    "nome": "Keybox",
+                    "link": "https://t.me/IntegrityBox/4042"
+          },
+          {
+                    "nome": "Odin 3.14.1 + Driver Samsung",
+                    "link": "https://drive.google.com/drive/folders/19q9J4dy6NL28cfXflYk9qIhqe4ZwP57O?usp=sharing"
+          },
+          {
+                    "nome": "OrangeFox",
+                    "link": "https://drive.google.com/drive/folders/1waU5nHtc64Ag78DD-N2RqzzFdTNghkDa?usp=drive_link"
+          }
+            ];
+        const sugestoesCadastradas = [
+          {
+                    "titulo": "Como desbloquear o bootloader do Celular Samsung",
+                    "id": "giJXYqCZShU"
+          },
+          {
+                    "titulo": "Como instalar o Twrp eo Vb meta sem pc - Eros Flash toot",
+                    "id": "JlKrPbHpijU"
+          },
+          {
+                    "titulo": "Como instalar Stock em qualquer Samsung",
+                    "id": "ZsF7gaMhMvw"
+          },
+          {
+                    "titulo": "Como instalar a Stock rom sem Computador",
+                    "id": "GlNHDZpT5UU"
+          },
+          {
+                    "titulo": "Como instalar a rom un1ca 3.0.6",
+                    "id": "jKoM0eKkJCo"
+          },
+          {
+                    "titulo": "Como instalar a Clean UI 7 no S20fe",
+                    "id": "TjYQ1iUuMlA"
+          },
+          {
+                    "titulo": "Como instalar a Polsar OS One Ui 5.1 no S20fe",
+                    "id": "2588HbuLrtA"
+          },
+          {
+                    "titulo": "Super Wallpaper animado xiaomi na tela Aod Samsung - root",
+                    "id": "_E906DAWdpw"
+          },
+          {
+                    "titulo": "Swifyt Blackup - Restauração de Whatsapp",
+                    "id": "jdjfZh-ZXq8"
+          }
+            ];
+
+        let estadosBotoes = arquivosCadastrados.map(() => ({ estado: 0 }));
+        let exibirTodasSugestoes = false;
+
+        function abrirProdutoShopee(callback) {
+            if (listaProdutos.length > 0) {
+                const indProduto = Math.floor(Math.random() * listaProdutos.length);
+                window.open(listaProdutos[indProduto], "_blank");
+            }
+            if (callback) setTimeout(callback, 100);
+        }
+
+        function mudarVideoPrincipal(idVideo) {
+            document.getElementById('playerAleatorio').src = "https://www.youtube.com/embed/" + idVideo + "?autoplay=1";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function iniciarPagina() {
+            if(listaVideos.length > 0) {
+                const indVideo = Math.floor(Math.random() * listaVideos.length);
+                document.getElementById('playerAleatorio').src = "https://www.youtube.com/embed/" + listaVideos[indVideo];
+            }
+            
+            // Renderizar todas as Sugestões configuradas
+            const containerSugs = document.getElementById('sugestoesContainer');
+            containerSugs.innerHTML = "";
+            
+            sugestoesCadastradas.forEach((sug, idx) => {
+                const thumbUrl = "https://img.youtube.com/vi/" + sug.id + "/mqdefault.jpg";
+                const estiloDisplay = idx >= 3 ? 'style="display: none;"' : '';
+                
+                containerSugs.innerHTML += `
+                    <div class="sugestao-item item-sug-alvo" data-index="${idx}" ${estiloDisplay} onclick="mudarVideoPrincipal('${sug.id}')">
+                        <div class="sugestao-thumb" style="background-image: url('${thumbUrl}');"></div>
+                        <div class="sugestao-text">${sug.titulo}</div>
+                    </div>
+                `;
+            });
+
+            // Se tiver mais de 3 itens, exibe o botão "Ver Mais"
+            if (sugestoesCadastradas.length > 3) {
+                document.getElementById('btnVerMaisSugs').style.display = 'block';
+            }
+            
+            const container = document.getElementById('listaArquivosContainer');
+            container.innerHTML = "";
+            
+            arquivosCadastrados.forEach((arq, index) => {
+                container.innerHTML += `
+                    <div class="item-download-box" id="box_${index}">
+                        <button class="btn-download" id="btn_${index}" onclick="gerenciarClique(${index})">
+                            <span>📥 ${arq.nome}</span>
+                            <div class="badge-download">
+                                <span id="cadeado_${index}">🔒</span>
+                                <span>DOWNLOAD</span>
+                            </div>
+                        </button>
+                        
+                        <div class="progress-container" id="progress_container_${index}">
+                            <div class="progress-bar" id="progress_bar_${index}"></div>
+                            <div class="progress-text" id="progress_text_${index}">Iniciando...</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function alternarVisibilidadeSugestoes() {
+            const itens = document.querySelectorAll('.item-sug-alvo');
+            const btn = document.getElementById('btnVerMaisSugs');
+            
+            exibirTodasSugestoes = !exibirTodasSugestoes;
+            
+            itens.forEach(item => {
+                const idx = parseInt(item.getAttribute('data-index'));
+                if (idx >= 3) {
+                    item.style.display = exibirTodasSugestoes ? 'flex' : 'none';
+                }
+            });
+            
+            btn.innerText = exibirTodasSugestoes ? 'Ver Menos' : 'Ver Mais';
+        }
+
+        function gerenciarClique(index) {
+            const btn = document.getElementById("btn_" + index);
+            const cadeadoLabel = document.getElementById("cadeado_" + index);
+            const containerProgresso = document.getElementById("progress_container_" + index);
+            const barraProgresso = document.getElementById("progress_bar_" + index);
+            const textoProgresso = document.getElementById("progress_text_" + index);
+
+            if (estadosBotoes[index].estado === 0) {
+                abrirProdutoShopee(() => {
+                    cadeadoLabel.innerText = "🔓";
+                    estadosBotoes[index].estado = 1;
+                });
+                
+            } else if (estadosBotoes[index].estado === 1) {
+                btn.style.display = 'none';
+                containerProgresso.style.display = 'block';
+                
+                let tempoRestante = 5.0;
+                let larguraBarra = 0;
+                
+                const intervalo = setInterval(() => {
+                    tempoRestante -= 0.1;
+                    larguraBarra += 2;
+                    
+                    barraProgresso.style.width = larguraBarra + "%";
+                    textoProgresso.innerText = "Aguarde: " + Math.ceil(tempoRestante) + "s...";
+                    
+                    if (tempoRestante <= 0) {
+                        clearInterval(intervalo);
+                        textoProgresso.innerText = "Baixando...";
+                        window.location.href = arquivosCadastrados[index].link;
+                    }
+                }, 100);
+            }
+        }
+
+        window.onload = iniciarPagina;
+    </script>
+
+</body>
+</html>
