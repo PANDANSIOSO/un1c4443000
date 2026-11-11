@@ -1,424 +1,769 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canal Panda Ansioso | Downloads</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { 
-            background-color: #0b0f19; 
-            color: #ffffff; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            padding: 15px; 
-        }
-        
-        .ad-container {
-            width: 100%;
-            max-width: 100%;
-            margin: 10px 0;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        
-        .ad-container iframe,
-        .ad-container ins,
-        .ad-container div {
-            max-width: 100% !important;
-            margin: 0 auto !important;
-            display: inline-block !important;
-            text-align: center !important;
-        }
-        
-        .ad-728x90 { min-height: 90px; }
-        .ad-300x250 { min-height: 250px; }
-        .ad-320x50 { min-height: 50px; }
-        
-        .card { 
-            background: linear-gradient(135deg, #111827 0%, #1f2937 100%); 
-            border: 3px solid #39ff14; 
-            box-shadow: 0 0 25px rgba(57, 255, 20, 0.2); 
-            border-radius: 20px; 
-            width: 100%; 
-            max-width: 480px; 
-            padding: 30px 20px; 
-            text-align: center; 
-        }
-        h1 { font-size: 24px; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; margin-top: 10px; }
-        .channel-name { color: #39ff14; text-shadow: 0 0 10px rgba(57, 255, 20, 0.5); }
-        p.subtitle { color: #9ca3af; font-size: 14px; margin-bottom: 20px; }
-        
-        .video-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 2px solid #0077ff; box-shadow: 0 0 15px rgba(0, 119, 255, 0.3); margin-bottom: 20px; background: #000; }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        
-        /* SEÇÃO DE SUGESTÕES */
-        .sugestoes-titulo { font-size: 14px; color: #39ff14; text-align: left; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .sugestoes-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
-        .sugestao-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; transition: 0.2s; text-decoration: none; }
-        .sugestao-item:hover { border-color: #0077ff; transform: translateY(-2px); }
-        .sugestao-thumb { width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; }
-        .sugestao-text { font-size: 10px; color: #fff; padding: 6px; text-align: left; font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; min-height: 32px; }
-        
-        .btn-ver-mais { background: transparent; border: 1px solid #0077ff; color: #0077ff; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; margin-bottom: 20px; transition: 0.2s; text-transform: uppercase; display: none; width: 100%; text-align: center; }
-        .btn-ver-mais:hover { background: #0077ff; color: #fff; box-shadow: 0 0 10px rgba(0, 119, 255, 0.4); }
-
-        .arquivos-container { display: flex; flex-direction: column; gap: 15px; text-align: left; width: 100%; margin: 15px 0; }
-        
-        .item-download-box { position: relative; width: 100%; min-height: 58px; background: rgba(255,255,255,0.02); border-radius: 8px; }
-        
-        .btn-download { 
-            display: flex; align-items: center; justify-content: space-between; width: 100%; height: 58px; padding: 0 18px;
-            font-size: 14px; font-weight: bold; border: none; cursor: pointer; border-radius: 8px;
-            transition: all 0.3s ease; 
-            background: #1f2937; color: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .btn-download:hover { background: #2d3748; transform: translateX(2px); }
-        
-        .badge-download {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border: 2px solid #39ff14;
-            border-radius: 6px;
-            color: #39ff14;
-            font-size: 12px;
-            text-transform: uppercase;
-            font-weight: 800;
-            background: transparent;
-            box-shadow: 0 0 8px rgba(57, 255, 20, 0.2);
-        }
-
-        .progress-container { display: none; width: 100%; height: 58px; background: #111827; border-radius: 8px; position: relative; border: 2px solid #39ff14; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: #39ff14; transition: width 0.1s linear; }
-        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: bold; font-size: 13px; color: #fff; text-shadow: 0 0 5px #000; text-transform: uppercase; width: 100%; text-align: center; }
-
-        /* SEÇÃO SOCIAL MEDIA (HORIZONTAL & ÍCONES OFICIAIS) */
-        .social-title { font-size: 13px; color: #0077ff; font-weight: bold; margin-top: 25px; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; text-align: center; }
-        .social-container { display: flex; justify-content: space-between; gap: 8px; width: 100%; margin-bottom: 5px; }
-        .social-btn { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-width: 0; height: 42px; font-size: 10px; font-weight: bold; border-radius: 8px; text-decoration: none; color: #fff; transition: all 0.2s ease; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .social-btn svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
-        .social-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.3); }
-        
-        .btn-tiktok { background: #000000; border: 1px solid #ff0050; }
-        .btn-tiktok:hover { background: #ff0050; border-color: #ff0050; color: #fff; }
-        
-        .btn-telegram-group { background: #1f2937; border: 1px solid #0088cc; color: #0088cc; }
-        .btn-telegram-group:hover { background: #0088cc; color: #fff; }
-        
-        .btn-telegram-profile { background: #0088cc; border: 1px solid #0088cc; }
-        .btn-telegram-profile:hover { background: #0077b3; border-color: #0077b3; }
-
-        .footer { margin-top: 25px; font-size: 11px; color: #4b5563; }
-        @media (max-width: 480px) { 
-            body { padding: 10px; } 
-            .card { padding: 20px 15px; border-radius: 15px; } 
-            h1 { font-size: 20px; } 
-            .social-btn { font-size: 9px; gap: 4px; height: 40px; }
-            .social-btn svg { width: 14px; height: 14px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panda Ansioso</title>
+<!-- Popunder desativado -->
+<script type="text/javascript" src="https://pl29725480.profitableratecpmnetwork.com/09/2f/ac/092facea61b744fe5140d48a0f6cb8e2.js"></script>
+<style>
+  :root {
+    --tema: #00ff80; --tema-escuro: #00b359; --tema-rgb: 0, 255, 128;
+    --fundo: #0a0f0a;
+    --titulo-fonte: 'Segoe UI', system-ui, sans-serif;
+    --titulo-peso: 800; --titulo-estilo: normal; --titulo-tamanho: 1.9rem;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+  body {
+    min-height: 100vh; background: var(--fundo);
+    background-color: var(--fundo);
+    background-image:
+      var(--fundo-imagem),
+      radial-gradient(circle at 15% 20%, rgba(var(--tema-rgb), 0.15), transparent 40%),
+      radial-gradient(circle at 85% 70%, rgba(var(--tema-rgb), 0.12), transparent 45%);
+    background-size: cover, auto, auto;
+    background-position: center, center, center;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-attachment: fixed, fixed, fixed;
+    color: #e8ffe8; padding: 20px; overflow-x: hidden;
+  }
+  .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(14px); border: 1px solid rgba(var(--tema-rgb), 0.25); border-radius: 18px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); }
+  .ad-top, .ad-native, .ad-footer {
+    max-width: 1100px; margin: 0 auto 20px; padding: 8px;
+    background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(var(--tema-rgb), 0.2);
+    border-radius: 14px; display: flex; justify-content: center; align-items: center; overflow: hidden; min-height: 90px;
+  }
+  .ad-native { min-height: 100px; margin-bottom: 30px; }
+  .ad-footer { min-height: 60px; }
+  .ad-top iframe, .ad-top img, .ad-top ins,
+  .ad-native iframe, .ad-native img, .ad-native ins, .ad-native div,
+  .ad-footer iframe, .ad-footer img, .ad-footer ins { max-width: 100%; display: block; }
+  header { max-width: 1100px; margin: 0 auto 25px; padding: 20px 25px; display: flex; align-items: center; gap: 18px; }
+  .logo { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(135deg, var(--tema), var(--tema-escuro)); display: flex; align-items: center; justify-content: center; font-size: 34px; box-shadow: 0 0 25px rgba(var(--tema-rgb), 0.5); flex-shrink: 0; overflow: hidden; }
+  .logo img { width: 100%; height: 100%; object-fit: cover; }
+  .titulo-linha { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .titulo-linha h1 { margin: 0; }
+  .titulo-linha .subtitulo { color: #7fa887; font-size: 0.9rem; }
+  header h1 { font-family: var(--titulo-fonte); font-weight: var(--titulo-peso); font-style: var(--titulo-estilo); font-size: var(--titulo-tamanho); color: var(--tema); letter-spacing: 0.5px; text-shadow: 0 0 20px rgba(var(--tema-rgb), 0.4); }
+  header h1.contorno { -webkit-text-fill-color: transparent; -webkit-text-stroke: 2px var(--tema); text-shadow: none; }
+  header h1.sombra { text-shadow: 0 0 10px var(--tema), 0 0 20px var(--tema), 0 0 30px var(--tema); }
+  header h1.tresd { text-shadow: 3px 3px 0 var(--tema-escuro), 6px 6px 0 rgba(0,0,0,0.4); }
+  header p { color: #9fdcb0; font-size: 0.9rem; margin-top: 2px; }
+  section { max-width: 1100px; margin: 0 auto 30px; padding: 22px; }
+  .section-title { font-size: 1.3rem; color: var(--tema); margin-bottom: 18px; display: flex; align-items: center; gap: 10px; font-weight: 700; }
+  .player-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; border: 1px solid rgba(var(--tema-rgb), 0.3); box-shadow: 0 0 30px rgba(var(--tema-rgb), 0.15); }
+  .player-wrap iframe { width: 100%; height: 100%; border: 0; }
+  .thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+  .thumb { position: relative; border-radius: 12px; overflow: hidden; cursor: pointer; border: 1px solid rgba(var(--tema-rgb), 0.2); transition: all 0.25s; background: rgba(0, 0, 0, 0.3); display: flex; flex-direction: column; }
+  .thumb:hover { transform: translateY(-4px); border-color: var(--tema); box-shadow: 0 8px 25px rgba(var(--tema-rgb), 0.35); }
+  .thumb-img { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: #111; }
+  .thumb-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .thumb-img::after { content: "▶"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.35); color: var(--tema); font-size: 2rem; opacity: 0; transition: opacity 0.25s; }
+  .thumb:hover .thumb-img::after { opacity: 1; }
+  .thumb-title { font-size: 0.78rem; color: #c8ffd8; padding: 8px 10px; line-height: 1.3; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 42px; }
+  .thumb.hidden { display: none; }
+  .btn-vermais { display: block; margin: 20px auto 0; padding: 12px 32px; background: rgba(var(--tema-rgb), 0.1); border: 1px solid var(--tema); color: var(--tema); border-radius: 30px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
+  .btn-vermais:hover { background: var(--tema); color: #0a0f0a; box-shadow: 0 0 25px rgba(var(--tema-rgb), 0.6); }
+  .download-item { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 20px; margin-bottom: 12px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(var(--tema-rgb), 0.22); border-radius: 14px; transition: all 0.25s; }
+  .download-item:hover { border-color: rgba(var(--tema-rgb), 0.5); background: rgba(var(--tema-rgb), 0.06); }
+  .download-name { font-size: 1.05rem; font-weight: 600; color: #d8ffe0; display: flex; align-items: center; gap: 10px; }
+  .download-name::before { content: "📦"; font-size: 1.2rem; }
+  .btn-download { display: flex; align-items: center; gap: 10px; padding: 12px 28px; background: transparent; color: var(--tema); border: 2px solid var(--tema); border-radius: 12px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.25s; white-space: nowrap; letter-spacing: 1px; box-shadow: 0 0 15px rgba(var(--tema-rgb), 0.3); text-transform: uppercase; }
+  .btn-download svg { width: 16px; height: 16px; fill: currentColor; }
+  .btn-download:hover { background: rgba(var(--tema-rgb), 0.1); box-shadow: 0 0 25px rgba(var(--tema-rgb), 0.6); transform: translateY(-2px); }
+  .btn-download.progress-mode { position: relative; padding: 0; overflow: hidden; cursor: default; justify-content: center; min-width: 200px; height: 46px; transition: none; }
+  .btn-download.progress-mode:hover { transform: none; background: transparent; }
+  .btn-download .progress-fill-btn { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: linear-gradient(90deg, var(--tema), var(--tema-escuro)); box-shadow: 0 0 20px rgba(var(--tema-rgb), 0.7); transition: width 0.9s linear; }
+  .btn-download .progress-label-btn { position: relative; z-index: 2; display: flex; align-items: center; gap: 8px; padding: 12px 20px; font-weight: 800; font-size: 0.95rem; color: #0a0f0a; text-transform: uppercase; letter-spacing: 1px; }
+  .page2-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+  .btn-voltar { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: rgba(var(--tema-rgb), 0.1); border: 1px solid var(--tema); color: var(--tema); border-radius: 30px; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.25s; text-decoration: none; }
+  .btn-voltar:hover { background: var(--tema); color: #0a0f0a; box-shadow: 0 0 20px rgba(var(--tema-rgb), 0.6); }
+  .progress-wrap { position: relative; width: 100%; height: 60px; background: rgba(var(--tema-rgb), 0.08); border: 2px solid var(--tema); border-radius: 14px; overflow: hidden; box-shadow: 0 0 20px rgba(var(--tema-rgb), 0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+  .progress-wrap.waiting { border-color: #ffcc00; box-shadow: 0 0 20px rgba(255, 204, 0, 0.4); animation: pulse 1s infinite; }
+  .progress-wrap:hover:not(.running):not(.waiting) { background: rgba(var(--tema-rgb), 0.15); }
+  .progress-wrap.running { cursor: default; }
+  .progress-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: linear-gradient(90deg, var(--tema), var(--tema-escuro)); transition: width 0.9s linear; box-shadow: 0 0 25px rgba(var(--tema-rgb), 0.7); }
+  .progress-text { position: relative; z-index: 2; display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1rem; color: var(--tema); text-transform: uppercase; letter-spacing: 1px; }
+  .progress-text svg { width: 18px; height: 18px; fill: currentColor; }
+  .progress-wrap.running .progress-text { color: #0a0f0a; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+  .socials { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .social-btn { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 12px; border-radius: 14px; text-decoration: none; font-weight: 700; font-size: 0.9rem; transition: all 0.25s; border: 2px solid transparent; text-align: center; letter-spacing: 0.5px; }
+  .social-btn svg, .social-btn img { width: 22px; height: 22px; fill: currentColor; flex-shrink: 0; object-fit: contain; }
+  .social-btn:hover { transform: translateY(-3px); }
+  footer { text-align: center; padding: 25px 15px; color: #6fa87d; font-size: 0.85rem; }
+  .page { display: none; opacity: 0; transform: translateX(25px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1); }
+  .page.active { display: block; opacity: 1; transform: translateX(0); }
+  .page.saindo { display: block; opacity: 0; transform: translateX(-25px); pointer-events: none; position: absolute; left: 0; right: 0; }
+  .page.entrando { display: block; opacity: 0; transform: translateX(25px); }
+  @media (max-width: 640px) {
+    header { flex-direction: column; text-align: center; padding: 18px; }
+    header h1 { font-size: 1.5rem; }
+    .thumb-title { font-size: 0.68rem; padding: 6px 7px; min-height: 36px; }
+    .download-item { flex-direction: column; align-items: stretch; text-align: center; }
+    .download-name { justify-content: center; }
+    .btn-download { width: 100%; justify-content: center; }
+    .btn-download.progress-mode { min-width: 100%; }
+    .socials { grid-template-columns: repeat(2, 1fr); }
+    .social-btn { font-size: 0.8rem; padding: 12px 8px; }
+    .progress-wrap { height: 55px; }
+    .progress-text { font-size: 0.9rem; }
+    .ad-top { min-height: 60px; padding: 4px; }
+    .ad-native { min-height: 80px; padding: 8px; }
+    .ad-footer { min-height: 50px; padding: 8px; }
+  }
+</style>
 </head>
 <body>
 
-    <div class="ad-container ad-728x90">
-        <script>
-            atOptions = {
-                'key' : '0090fc855bce8fb389926eabcc55ed1f',
-                'format' : 'iframe',
-                'height' : 90,
-                'width' : 728,
-                'params' : {}
-            };
-        </script>
-        <script src="https://www.highperformanceformat.com/0090fc855bce8fb389926eabcc55ed1f/invoke.js"></script>
-    </div>
-    <div class="card">
-        <h1><span class="channel-name">Canal Panda Ansioso</span></h1>
-        <p class="subtitle">Conteúdo exclusivo de Custom ROMs e Otimização.</p>
+<div class="page active" id="page1">
 
-        <div class="video-container">
-            <iframe id="playerAleatorio" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-
-        <div class="sugestoes-titulo">💡 Recomendados para você:</div>
-        <div class="sugestoes-container" id="sugestoesContainer"></div>
-        <button id="btnVerMaisSugs" class="btn-ver-mais" onclick="alternarVisibilidadeSugestoes()">Ver Mais</button>
-
-
-    <div class="ad-container ad-320x50">
-        <script>
-            atOptions = {
-                'key' : '41eb470e322f84ddcbac2a56ee7c4ef5',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-        </script>
-        <script src="https://www.highperformanceformat.com/41eb470e322f84ddcbac2a56ee7c4ef5/invoke.js"></script>
-    </div>
-
-    <script async="async" data-cfasync="false" src="https://pl29740469.effectivecpmnetwork.com/94f71d23e1cb7f5455caa2e345da6d0b/invoke.js"></script>
-    <div id="container-94f71d23e1cb7f5455caa2e345da6d0b"></div>
-        <div class="arquivos-container" id="listaArquivosContainer"></div>
-
-        <div class="footer-anuncios"></div>
-
-        <div class="social-title">📱 Siga minhas redes sociais:</div>
-        <div class="social-container">
-            <a href="https://www.tiktok.com/@pandaansioso?_r=1&_t=ZS-97GZMXNT6pw" target="_blank" class="social-btn btn-tiktok">
-                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.05 1.62 4.2 1.21 1.4 3 2.16 4.75 2.38v3.86c-1.78.13-3.56-.34-4.93-1.48-.48-.4-.89-.88-1.22-1.42v6.75c.04 3.11-1.63 6.13-4.48 7.42-3.12 1.48-7.07.67-9.33-1.92-2.31-2.61-2.34-6.73-.08-9.38 1.95-2.35 5.25-3.3 8.16-2.4v3.93c-1.69-.53-3.61-.05-4.83 1.15-1.42 1.37-1.54 3.78-.27 5.3 1.25 1.55 3.65 1.83 5.23.64 1.15-.84 1.74-2.27 1.65-3.71V0z"/></svg>
-                TikTok
-            </a>
-            <a href="https://t.me/r8q_BR" target="_blank" class="social-btn btn-telegram-group">
-                <svg viewBox="0 0 24 24"><path d="M11.944 0C5.344 0 0 5.344 0 12c0 6.656 5.344 12 11.944 12 6.656 0 12-5.344 12-12 0-6.656-5.344-12-12-12zm5.892 8.244l-1.944 9.144c-.144.66-.54 1.02-1.092.708l-2.964-2.184-1.428 1.38c-.156.156-.288.288-.588.288l.216-3.048 5.556-5.028c.24-.216-.048-.336-.372-.12l-6.864 4.32-2.952-.924c-.648-.204-.66-.648.132-.96l11.532-4.452c.54-.204 1.008.12.876.876z"/></svg>
-                Grupo
-            </a>
-            <a href="https://t.me/PANDA_ANSIOSO" target="_blank" class="social-btn btn-telegram-profile">
-                <svg viewBox="0 0 24 24"><path d="M11.944 0C5.344 0 0 5.344 0 12c0 6.656 5.344 12 11.944 12 6.656 0 12-5.344 12-12 0-6.656-5.344-12-12-12zm5.892 8.244l-1.944 9.144c-.144.66-.54 1.02-1.092.708l-2.964-2.184-1.428 1.38c-.156.156-.288.288-.588.288l.216-3.048 5.556-5.028c.24-.216-.048-.336-.372-.12l-6.864 4.32-2.952-.924c-.648-.204-.66-.648.132-.96l11.532-4.452c.54-.204 1.008.12.876.876z"/></svg>
-                Perfil
-            </a>
-        </div>
-
-        <div class="footer">&copy; 2026 Canal Panda Ansioso - Todos os direitos reservados.</div>
-    </div>
-
-    <div class="ad-container ad-300x250">
-        <script>
-            atOptions = {
-                'key' : '649e8619ac522c5b495c01e468041d0e',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-        </script>
-        <script src="https://www.highperformanceformat.com/649e8619ac522c5b495c01e468041d0e/invoke.js"></script>
-    </div>
-
-    <script src="https://pl29725634.effectivecpmnetwork.com/6f/9b/2c/6f9b2c7ad1c7f92594d3d5e23ae29dd6.js"></script>
-    <script>
-        const listaVideos = [
-          "QXJPVtfV8S8",
-          "KGxZK9I79RQ",
-          "jKoM0eKkJCo",
-          "TjYQ1iUuMlA",
-          "MWQ3iiY-qvI",
-          "_E906DAWdpw",
-          "JWRFqQPIydw",
-          "2588HbuLrtA"
-            ];
-        const listaProdutos = [
-          "https://s.shopee.com.br/4qDQZzlLe5",
-          "https://s.shopee.com.br/7VEBkbMT81",
-          "https://s.shopee.com.br/60PNxnGBxT",
-          "https://s.shopee.com.br/902lACp5sm",
-          "https://s.shopee.com.br/3LOOPkKx93",
-          "https://s.shopee.com.br/60P9acpCqm",
-          "https://s.shopee.com.br/40e5CvfcpC",
-          "https://s.shopee.com.br/6VLQBUFJj5",
-          "https://s.shopee.com.br/1gGAQYhaiv",
-          "https://s.shopee.com.br/2qS7oj7XmR",
-          "https://s.shopee.com.br/3LOOPgZUce"
-            ];
-        const arquivosCadastrados = [
-          {
-                    "nome": "Un1ca 3.0.0",
-                    "link": "https://t.me/unicarom"
-          },
-          {
-                    "nome": "Twrp-3.7.1_12-5 (versão atualizada não ofc) + Vb meta",
-                    "link": "https://drive.google.com/drive/folders/1TFfsw590NKwi-3CDxZ2glZHPl14ad923?usp=sharing"
-          },
-          {
-                    "nome": "Site Twrp",
-                    "link": "https://twrp.me/"
-          },
-          {
-                    "nome": "Keybox",
-                    "link": "https://t.me/IntegrityBox/4042"
-          },
-          {
-                    "nome": "Odin 3.14.1 + Driver Samsung",
-                    "link": "https://drive.google.com/drive/folders/19q9J4dy6NL28cfXflYk9qIhqe4ZwP57O?usp=sharing"
-          },
-          {
-                    "nome": "OrangeFox",
-                    "link": "https://drive.google.com/drive/folders/1waU5nHtc64Ag78DD-N2RqzzFdTNghkDa?usp=drive_link"
-          },
-          {
-                    "nome": "Versões estáveis Un1ca",
-                    "link": "https://github.com/salvogiangri/UN1CA/releases"
-          }
-            ];
-        const sugestoesCadastradas = [
-          {
-                    "titulo": "Como desbloquear o bootloader do Celular Samsung",
-                    "id": "giJXYqCZShU"
-          },
-          {
-                    "titulo": "Como instalar o Twrp eo Vb meta sem pc - Eros Flash toot",
-                    "id": "JlKrPbHpijU"
-          },
-          {
-                    "titulo": "Como instalar Stock em qualquer Samsung",
-                    "id": "ZsF7gaMhMvw"
-          },
-          {
-                    "titulo": "Como instalar a Stock rom sem Computador",
-                    "id": "GlNHDZpT5UU"
-          },
-          {
-                    "titulo": "Como instalar a rom un1ca 3.0.6",
-                    "id": "jKoM0eKkJCo"
-          },
-          {
-                    "titulo": "Como instalar a Clean UI 7 no S20fe",
-                    "id": "TjYQ1iUuMlA"
-          },
-          {
-                    "titulo": "Como instalar a Polsar OS One Ui 5.1 no S20fe",
-                    "id": "2588HbuLrtA"
-          },
-          {
-                    "titulo": "Super Wallpaper animado xiaomi na tela Aod Samsung - root",
-                    "id": "_E906DAWdpw"
-          },
-          {
-                    "titulo": "Swifyt Blackup - Restauração de Whatsapp",
-                    "id": "jdjfZh-ZXq8"
-          }
-            ];
-
-        let estadosBotoes = arquivosCadastrados.map(() => ({ estado: 0 }));
-        let exibirTodasSugestoes = false;
-
-        function abrirProdutoShopee(callback) {
-            if (listaProdutos.length > 0) {
-                const indProduto = Math.floor(Math.random() * listaProdutos.length);
-                window.open(listaProdutos[indProduto], "_blank");
-            }
-            if (callback) setTimeout(callback, 100);
-        }
-
-        function mudarVideoPrincipal(idVideo) {
-            document.getElementById('playerAleatorio').src = "https://www.youtube.com/embed/" + idVideo + "?autoplay=1";
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function iniciarPagina() {
-            if(listaVideos.length > 0) {
-                const indVideo = Math.floor(Math.random() * listaVideos.length);
-                document.getElementById('playerAleatorio').src = "https://www.youtube.com/embed/" + listaVideos[indVideo];
-            }
-            
-            // Renderizar todas as Sugestões configuradas
-            const containerSugs = document.getElementById('sugestoesContainer');
-            containerSugs.innerHTML = "";
-            
-            sugestoesCadastradas.forEach((sug, idx) => {
-                const thumbUrl = "https://img.youtube.com/vi/" + sug.id + "/mqdefault.jpg";
-                const estiloDisplay = idx >= 3 ? 'style="display: none;"' : '';
-                
-                containerSugs.innerHTML += `
-                    <div class="sugestao-item item-sug-alvo" data-index="${idx}" ${estiloDisplay} onclick="mudarVideoPrincipal('${sug.id}')">
-                        <div class="sugestao-thumb" style="background-image: url('${thumbUrl}');"></div>
-                        <div class="sugestao-text">${sug.titulo}</div>
-                    </div>
-                `;
-            });
-
-            // Se tiver mais de 3 itens, exibe o botão "Ver Mais"
-            if (sugestoesCadastradas.length > 3) {
-                document.getElementById('btnVerMaisSugs').style.display = 'block';
-            }
-            
-            const container = document.getElementById('listaArquivosContainer');
-            container.innerHTML = "";
-            
-            arquivosCadastrados.forEach((arq, index) => {
-                container.innerHTML += `
-                    <div class="item-download-box" id="box_${index}">
-                        <button class="btn-download" id="btn_${index}" onclick="gerenciarClique(${index})">
-                            <span>📥 ${arq.nome}</span>
-                            <div class="badge-download">
-                                <span id="cadeado_${index}">🔒</span>
-                                <span>DOWNLOAD</span>
-                            </div>
-                        </button>
-                        
-                        <div class="progress-container" id="progress_container_${index}">
-                            <div class="progress-bar" id="progress_bar_${index}"></div>
-                            <div class="progress-text" id="progress_text_${index}">Iniciando...</div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function alternarVisibilidadeSugestoes() {
-            const itens = document.querySelectorAll('.item-sug-alvo');
-            const btn = document.getElementById('btnVerMaisSugs');
-            
-            exibirTodasSugestoes = !exibirTodasSugestoes;
-            
-            itens.forEach(item => {
-                const idx = parseInt(item.getAttribute('data-index'));
-                if (idx >= 3) {
-                    item.style.display = exibirTodasSugestoes ? 'flex' : 'none';
-                }
-            });
-            
-            btn.innerText = exibirTodasSugestoes ? 'Ver Menos' : 'Ver Mais';
-        }
-
-        function gerenciarClique(index) {
-            const btn = document.getElementById("btn_" + index);
-            const cadeadoLabel = document.getElementById("cadeado_" + index);
-            const containerProgresso = document.getElementById("progress_container_" + index);
-            const barraProgresso = document.getElementById("progress_bar_" + index);
-            const textoProgresso = document.getElementById("progress_text_" + index);
-
-            if (estadosBotoes[index].estado === 0) {
-                abrirProdutoShopee(() => {
-                    cadeadoLabel.innerText = "🔓";
-                    estadosBotoes[index].estado = 1;
-                });
-                
-            } else if (estadosBotoes[index].estado === 1) {
-                btn.style.display = 'none';
-                containerProgresso.style.display = 'block';
-                
-                let tempoRestante = 5.0;
-                let larguraBarra = 0;
-                
-                const intervalo = setInterval(() => {
-                    tempoRestante -= 0.1;
-                    larguraBarra += 2;
-                    
-                    barraProgresso.style.width = larguraBarra + "%";
-                    textoProgresso.innerText = "Aguarde: " + Math.ceil(tempoRestante) + "s...";
-                    
-                    if (tempoRestante <= 0) {
-                        clearInterval(intervalo);
-                        textoProgresso.innerText = "Baixando...";
-                        window.location.href = arquivosCadastrados[index].link;
-                    }
-                }, 100);
-            }
-        }
-
-        window.onload = iniciarPagina;
+  <div class="ad-top">
+    <script type="text/javascript">
+      atOptions = { 'key' : '0090fc855bce8fb389926eabcc55ed1f', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
     </script>
+    <script type="text/javascript" src="https://www.highrevenueformat.com/0090fc855bce8fb389926eabcc55ed1f/invoke.js"></script>
+  </div>
 
+  <header class="glass">
+    <div class="logo" id="logo1">🐼</div>
+    <div>
+      <div class="titulo-linha"><h1 id="tituloP1">Panda Ansioso</h1><span class="subtitulo">Downloads exclusivos 😉</span></div>
+    </div>
+  </header>
+
+  <section class="glass">
+    <h2 class="section-title">🎬 Vídeos</h2>
+    <div class="player-wrap">
+      <iframe id="player1" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="thumbs" id="thumbs1"></div>
+    <button class="btn-vermais" data-target="1">Ver mais ▼</button>
+  </section>
+
+  <div class="ad-native">
+    <script async="async" data-cfasync="false" src="https://pl29740469.profitableratecpmnetwork.com/94f71d23e1cb7f5455caa2e345da6d0b/invoke.js"></script>
+    <div id="container-94f71d23e1cb7f5455caa2e345da6d0b"></div>
+  </div>
+
+  <section class="glass">
+    <h2 class="section-title">⬇️ Downloads 📥</h2>
+    <div id="downloadsList1"></div>
+  </section>
+
+  <section class="glass">
+    <h2 class="section-title">📱 Siga minhas redes sociais:</h2>
+    <div class="socials" id="socials1"></div>
+  </section>
+
+  <div class="ad-footer">
+    <script type="text/javascript">
+      atOptions = { 'key' : 'c556bd1b7ca67e48e7f2d4d4e2684217', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+    </script>
+    <script type="text/javascript" src="https://www.highrevenueformat.com/c556bd1b7ca67e48e7f2d4d4e2684217/invoke.js"></script>
+  </div>
+
+  <footer>© 2026 Panda Ansioso — Todos os direitos reservados 🐼</footer>
+</div>
+
+<div class="page" id="page2">
+
+  <div class="ad-top">
+    <script type="text/javascript">
+      atOptions = { 'key' : '0090fc855bce8fb389926eabcc55ed1f', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+    </script>
+    <script type="text/javascript" src="https://www.highrevenueformat.com/0090fc855bce8fb389926eabcc55ed1f/invoke.js"></script>
+  </div>
+
+  <header class="glass">
+    <div class="logo" id="logo2">🐼</div>
+    <div>
+      <h1 id="tituloP2">Panda Ansioso</h1>
+      <p>Download em andamento</p>
+    </div>
+  </header>
+
+  <section class="glass">
+    <div class="page2-header"><a class="btn-voltar" href="#" onclick="voltarPagina1(event)">⬅ Voltar</a></div>
+    <h2 class="section-title">📦 <span id="nomeArquivo">Arquivo</span></h2>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="progress-fill" id="progressFill"></div>
+      <div class="progress-text">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 1 1 6 0v3H9zm3 4a2 2 0 0 1 1 3.732V18a1 1 0 0 1-2 0v-1.268A2 2 0 0 1 12 13z"/></svg>
+        <span id="progressLabel">Download</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="glass">
+    <h2 class="section-title">🎬 Vídeos sugeridos</h2>
+    <div class="player-wrap">
+      <iframe id="player2" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="thumbs" id="thumbs2"></div>
+    <button class="btn-vermais" data-target="2">Ver mais ▼</button>
+  </section>
+
+  <div class="ad-native">
+    <script type="text/javascript">
+      atOptions = { 'key' : '41eb470e322f84ddcbac2a56ee7c4ef5', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };
+    </script>
+    <script type="text/javascript" src="https://www.highrevenueformat.com/41eb470e322f84ddcbac2a56ee7c4ef5/invoke.js"></script>
+  </div>
+
+  <section class="glass">
+    <h2 class="section-title">⬇️ Outros downloads</h2>
+    <div id="downloadsList2"></div>
+  </section>
+
+  <section class="glass">
+    <h2 class="section-title">📱 Siga minhas redes sociais:</h2>
+    <div class="socials" id="socials2"></div>
+  </section>
+
+  <div class="ad-footer">
+    <script type="text/javascript">
+      atOptions = { 'key' : 'c556bd1b7ca67e48e7f2d4d4e2684217', 'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {} };
+    </script>
+    <script type="text/javascript" src="https://www.highrevenueformat.com/c556bd1b7ca67e48e7f2d4d4e2684217/invoke.js"></script>
+  </div>
+
+  <footer>© 2026 Panda Ansioso — Todos os direitos reservadosanal Panda Ansioso </footer>
+</div>
+
+<script>
+const TEMA = {"cor":"#0e8632","tom":8,"fundo":"#0a0f0a","fundoImagem":"https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXo1bmhybHZjODg0M3lkYW92MG00Z3cwNzdwODJ3b2pkZXU3aXdqcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YrIq06kG5yrtxQEhj3/giphy.gif\nhttps://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmxhb3IwYjEycTVtNDJ3NmYzZXNieWNkbnYxb240NXI4NjJxMWRzMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EyiufcIwTdF35pNIFS/giphy.gif\nhttps://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Jldm0wMnlybnFzbWxzdDY3aHp4ang1eTFrYmwybDA0MG1yN2h3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jMbfmwkrcm82PRlYa9/giphy.gif\nhttps://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnc1Z2xheDAzd280aXVlNzU2anVndjd5bnpsYm5wa2k1NTg5cjl3dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uUGQvNHVBw0W4m5eb9/giphy.gif\nhttps://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExemd6eG9lYmVjbzM4ZWQ3NTVoZHphd2lrMmhkcjBza3JyeWlnYmhrZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GMN2Dp0BQC4hz6k22Q/giphy.gif","fonteEstilo":"bold","fonteForma":"century","fonteEfeito":"contorno","fonteTamanho":2.8,"fundosImagem":["https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYXo1bmhybHZjODg0M3lkYW92MG00Z3cwNzdwODJ3b2pkZXU3aXdqcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YrIq06kG5yrtxQEhj3/giphy.gif","https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmxhb3IwYjEycTVtNDJ3NmYzZXNieWNkbnYxb240NXI4NjJxMWRzMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/EyiufcIwTdF35pNIFS/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Jldm0wMnlybnFzbWxzdDY3aHp4ang1eTFrYmwybDA0MG1yN2h3aiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/jMbfmwkrcm82PRlYa9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnc1Z2xheDAzd280aXVlNzU2anVndjd5bnpsYm5wa2k1NTg5cjl3dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/uUGQvNHVBw0W4m5eb9/giphy.gif","https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExemd6eG9lYmVjbzM4ZWQ3NTVoZHphd2lrMmhkcjBza3JyeWlnYmhrZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/GMN2Dp0BQC4hz6k22Q/giphy.gif"]};
+const FONTES = {
+  "padrao": "'Segoe UI', system-ui, sans-serif",
+  "arial": "Arial, sans-serif",
+  "verdana": "Verdana, sans-serif",
+  "tahoma": "Tahoma, sans-serif",
+  "helvetica": "Helvetica, Arial, sans-serif",
+  "trebuchet": "'Trebuchet MS', sans-serif",
+  "franklin": "'Franklin Gothic Medium', sans-serif",
+  "segoe": "'Segoe UI Light', 'Segoe UI', sans-serif",
+  "calibri": "Calibri, sans-serif",
+  "comic": "'Comic Sans MS', 'Chalkboard SE', cursive",
+  "century": "'Century Gothic', 'Apple Gothic', sans-serif",
+  "nunito": "'Nunito', 'Quicksand', 'Segoe UI', sans-serif",
+  "impact": "Impact, 'Arial Black', sans-serif",
+  "arialblack": "'Arial Black', Arial, sans-serif",
+  "haettenschweiler": "Haettenschweiler, 'Arial Narrow Bold', sans-serif",
+  "rockwell": "Rockwell, 'Courier New', serif",
+  "georgia": "Georgia, serif",
+  "times": "'Times New Roman', Times, serif",
+  "garamond": "Garamond, serif",
+  "palatino": "'Palatino Linotype', 'Book Antiqua', Palatino, serif",
+  "bookman": "'Bookman Old Style', serif",
+  "brush": "'Brush Script MT', cursive",
+  "segoescript": "'Segoe Script', 'Comic Sans MS', cursive",
+  "lucida_hand": "'Lucida Handwriting', cursive",
+  "mistral": "Mistral, 'Brush Script MT', cursive",
+  "papyrus": "Papyrus, fantasy",
+  "copperplate": "'Copperplate Gothic', fantasy",
+  "oldenglish": "'Old English Text MT', 'UnifrakturCook', fantasy",
+  "stencil": "Stencil, 'Arial Black', sans-serif",
+  "courier": "'Courier New', monospace",
+  "lucida_console": "'Lucida Console', Monaco, monospace",
+  "consolas": "Consolas, Monaco, monospace"
+};
+
+(function(){
+  const hsl = (function(hex){
+    hex = hex.replace("#", "");
+    const r = parseInt(hex.substr(0,2),16)/255, g = parseInt(hex.substr(2,2),16)/255, b = parseInt(hex.substr(4,2),16)/255;
+    const max = Math.max(r,g,b), min = Math.min(r,g,b);
+    let h, s, l = (max+min)/2;
+    if (max===min){h=s=0;} else {
+      const d = max-min; s = l>0.5?d/(2-max-min):d/(max+min);
+      switch(max){ case r: h=(g-b)/d+(g<b?6:0); break; case g: h=(b-r)/d+2; break; case b: h=(r-g)/d+4; break; }
+      h/=6;
+    }
+    return { h: Math.round(h*360), s: Math.round(s*100), l: Math.round(l*100) };
+  })(TEMA.cor);
+  const root = document.documentElement;
+  root.style.setProperty("--tema", TEMA.cor);
+  root.style.setProperty("--tema-escuro", `hsl(${hsl.h}, ${hsl.s}%, ${Math.max(10, hsl.l + TEMA.tom - 20)}%)`);
+  root.style.setProperty("--tema-rgb", (function(hex){
+    hex = hex.replace("#","");
+    return `${parseInt(hex.substr(0,2),16)}, ${parseInt(hex.substr(2,2),16)}, ${parseInt(hex.substr(4,2),16)}`;
+  })(TEMA.cor));
+  root.style.setProperty("--fundo", TEMA.fundo);
+  const fundosDisponiveis = String(TEMA.fundoImagem || "").split(/\r?\n/).map(v => v.trim()).filter(Boolean);
+  let fundoAtual = "";
+  if (fundosDisponiveis.length === 1) {
+    fundoAtual = fundosDisponiveis[0];
+  } else if (fundosDisponiveis.length > 1) {
+    const chaveFundos = "pandaFundoIndice_" + btoa(unescape(encodeURIComponent(fundosDisponiveis.join("\n")))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 80);
+    let indice = parseInt(localStorage.getItem(chaveFundos) || "0", 10);
+    if (!Number.isFinite(indice) || indice < 0) indice = 0;
+    fundoAtual = fundosDisponiveis[indice % fundosDisponiveis.length];
+    localStorage.setItem(chaveFundos, String((indice + 1) % fundosDisponiveis.length));
+  }
+  const fundoImagem = fundoAtual ? 'url("' + fundoAtual.replace(/"/g, '\"') + '")' : "none";
+  root.style.setProperty("--fundo-imagem", fundoImagem);
+  root.style.setProperty("--titulo-fonte", FONTES[TEMA.fonteForma] || FONTES.padrao);
+  root.style.setProperty("--titulo-peso", TEMA.fonteEstilo.includes("bold") ? "800" : "500");
+  root.style.setProperty("--titulo-estilo", TEMA.fonteEstilo.includes("italic") ? "italic" : "normal");
+  root.style.setProperty("--titulo-tamanho", TEMA.fonteTamanho + "rem");
+  // Aplica efeito no título
+  ["tituloP1", "tituloP2"].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      if (TEMA.fonteEfeito === "contorno") el.classList.add("contorno");
+      if (TEMA.fonteEfeito === "sombra") el.classList.add("sombra");
+      if (TEMA.fonteEfeito === "3d") el.classList.add("tresd");
+    }
+  });
+})();
+
+const videosPrincipais = [];
+const videosSugeridos = [
+  "ujSKDCLya3g",
+  "nVD6Ivc0lwk",
+  "d9p7SAnpakU",
+  "h1rE18uQay4",
+  "r2-u425Uj90",
+  "1h8-DyXfvqk",
+  "8V6smI1u4Io",
+  "2588HbuLrtA",
+  "JWRFqQPIydw",
+  "_E906DAWdpw",
+  "EffxAazST2Y",
+  "P_S9rRbdHhE",
+  "GlNHDZpT5UU",
+  "JlKrPbHpijU",
+  "roGe1wotoYM",
+  "jdjfZh-ZXq8",
+  "ZsF7gaMhMvw",
+  "giJXYqCZShU"
+];
+const downloads = [
+  {
+    "id": "un1ca-3-0-0",
+    "nome": "Un1ca 3.0.0",
+    "linkFinal": "https://t.me/unicarom"
+  },
+  {
+    "id": "versao-estavel-un1ca",
+    "nome": "Versão Estavel Un1ca",
+    "linkFinal": "https://github.com/salvogiangri/UN1CA/releases"
+  },
+  {
+    "id": "twrp-3-7-1-12-5-nao-oficial-vb-meta-4g-5g",
+    "nome": "Twrp 3.7.1_12.5(não oficial)+ vb meta 4g/5g",
+    "linkFinal": "https://drive.google.com/drive/u/1/folders/1TFfsw590NKwi-3CDxZ2glZHPl14ad923"
+  },
+  {
+    "id": "orange-fox",
+    "nome": "Orange fox",
+    "linkFinal": "https://drive.google.com/drive/folders/1qHMnkkhk7QMA5FqpPlv9WT0CSLvV9TuX?usp=drive_link"
+  },
+  {
+    "id": "keybox",
+    "nome": "keybox",
+    "linkFinal": "https://t.me/IntegrityBox/4042"
+  },
+  {
+    "id": "site-twrp",
+    "nome": "Site Twrp",
+    "linkFinal": "https://twrp.me/"
+  }
+];
+const socialLinks = [
+  {
+    "tipo": "tiktok",
+    "nome": "TIKTOK",
+    "url": "https://www.tiktok.com/@pandaansioso"
+  },
+  {
+    "tipo": "telegramGrupo",
+    "nome": "GRUPO OFC S20FE",
+    "url": "https://t.me/r8q_BR"
+  },
+  {
+    "tipo": "telegramGrupo",
+    "nome": "GRUPO DO CANAL",
+    "url": "https://t.me/+bSBwWICUIYs1ODU5"
+  },
+  {
+    "tipo": "telegramPerfil",
+    "nome": "PERFIL DO TELEGRAM",
+    "url": "https://t.me/PANDA_ANSIOSO"
+  }
+];
+const linksDownload = [
+  "https://s.shopee.com.br/2qS7oj7XmR",
+  "https://s.shopee.com.br/6VLQBUFJj5",
+  "https://s.shopee.com.br/3LOOPgZUce",
+  "https://s.shopee.com.br/40e5CvfcpC",
+  "https://s.shopee.com.br/8fStm3peMm",
+  "https://s.shopee.com.br/5fpICZrSnU",
+  "https://s.shopee.com.br/70KfnDqTci",
+  "https://s.shopee.com.br/4qGBDK9ptp",
+  "https://s.shopee.com.br/1AvSa709C",
+  "https://s.shopee.com.br/60P9acpCqm"
+];
+const linksDownloadAtivos = true;
+const anunciosDownloadP1 = [
+  "https://www.profitableratecpmnetwork.com/cbhgpudtu3?key=77a710a4a265c17ccf301baac427c03f"
+];
+const anunciosDownloadP1Ativos = true;
+const logoUrl = "https://i.pinimg.com/736x/4f/96/91/4f9691029dfac734814cbb136909053e.jpg";
+const REDES = {
+  "tiktok": {
+    "nome": "TikTok",
+    "cor": "#ff0033",
+    "corFundo": "#000",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z\"/></svg>"
+  },
+  "telegramGrupo": {
+    "nome": "Telegram (Grupo)",
+    "cor": "#29a1e0",
+    "corFundo": "rgba(41, 161, 224, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z\"/></svg>"
+  },
+  "telegramPerfil": {
+    "nome": "Telegram (Perfil)",
+    "cor": "#29a1e0",
+    "corFundo": "#29a1e0",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z\"/></svg>"
+  },
+  "whatsapp": {
+    "nome": "WhatsApp",
+    "cor": "#25d366",
+    "corFundo": "rgba(37, 211, 102, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z\"/></svg>"
+  },
+  "facebook": {
+    "nome": "Facebook",
+    "cor": "#1877f2",
+    "corFundo": "rgba(24, 119, 242, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z\"/></svg>"
+  },
+  "instagram": {
+    "nome": "Instagram",
+    "cor": "#e4405f",
+    "corFundo": "rgba(228, 64, 95, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z\"/></svg>"
+  },
+  "youtube": {
+    "nome": "YouTube",
+    "cor": "#ff0000",
+    "corFundo": "rgba(255, 0, 0, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z\"/></svg>"
+  },
+  "x": {
+    "nome": "X (Twitter)",
+    "cor": "#ffffff",
+    "corFundo": "#000000",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z\"/></svg>"
+  },
+  "discord": {
+    "nome": "Discord",
+    "cor": "#5865f2",
+    "corFundo": "rgba(88, 101, 242, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z\"/></svg>"
+  },
+  "kwai": {
+    "nome": "Kwai",
+    "cor": "#ff7300",
+    "corFundo": "rgba(255, 115, 0, 0.05)",
+    "svg": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.955 6.662c-.195.34-.51.59-.88.7l-2.62.79v5.028c0 2.275-1.85 4.125-4.125 4.125S5.205 15.455 5.205 13.18s1.85-4.125 4.125-4.125c.183 0 .363.014.539.04v2.14a2.05 2.05 0 00-.539-.075 2.02 2.02 0 000 4.04 2.02 2.02 0 002.02-2.02V2.325h2.1v5.415l1.815-.548a2.05 2.05 0 001.4-1.925V2.325h2.09v2.587c0 .617-.108 1.228-.32 1.79-.147.383-.317.754-.51 1.11z\"/></svg>"
+  }
+};
+
+const svgCadeado = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 1 1 6 0v3H9zm3 4a2 2 0 0 1 1 3.732V18a1 1 0 0 1-2 0v-1.268A2 2 0 0 1 12 13z"/></svg>`;
+
+const titulosCache = {};
+async function buscarTitulo(id) {
+  if (titulosCache[id]) return titulosCache[id];
+  try {
+    const resp = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+    const data = await resp.json();
+    titulosCache[id] = data.title || "Vídeo";
+    return titulosCache[id];
+  } catch { return "Vídeo"; }
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function aplicarPrincipal() {
+  // Se houver vídeos principais, usa somente essa lista.
+  // Se estiver vazia, usa os vídeos sugeridos como fallback.
+  // Se ambas estiverem vazias, não exibe vídeo.
+  const lista = Array.isArray(videosPrincipais) && videosPrincipais.length
+    ? videosPrincipais
+    : (Array.isArray(videosSugeridos) ? videosSugeridos : []);
+
+  const player1 = document.getElementById('player1');
+  const player2 = document.getElementById('player2');
+  const secoes = [player1, player2].map(el => el?.closest('section.glass')).filter(Boolean);
+
+  if (!lista.length) {
+    secoes.forEach(secao => secao.style.display = 'none');
+    return;
+  }
+
+  secoes.forEach(secao => secao.style.display = '');
+  const escolhido = lista[Math.floor(Math.random() * lista.length)];
+  if (player1) player1.src = `https://www.youtube.com/embed/${escolhido}`;
+  if (player2) player2.src = `https://www.youtube.com/embed/${escolhido}`;
+}
+
+function aplicarLogo() {
+  if (!logoUrl) return;
+  const html = `<img src="${logoUrl}" alt="Logo" onerror="this.parentElement.innerHTML='🐼'">`;
+  const l1 = document.getElementById('logo1');
+  const l2 = document.getElementById('logo2');
+  if (l1) l1.innerHTML = html;
+  if (l2) l2.innerHTML = html;
+}
+
+function renderVideos(thumbsId, playerId) {
+  const container = document.getElementById(thumbsId);
+  const player = document.getElementById(playerId);
+  const secao = container ? container.closest('section.glass') : null;
+  const botao = secao ? secao.querySelector('.btn-vermais') : null;
+  const sugestoes = shuffle(Array.isArray(videosSugeridos) ? videosSugeridos : []);
+
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!sugestoes.length) {
+    if (secao) secao.style.display = 'none';
+    return;
+  }
+
+  if (secao) secao.style.display = '';
+  if (botao) botao.style.display = sugestoes.length > 3 ? '' : 'none';
+  sugestoes.forEach((id, i) => {
+    const div = document.createElement("div");
+    div.className = "thumb" + (i >= 3 ? " hidden" : "");
+    div.innerHTML = `<div class="thumb-img"><img src="https://img.youtube.com/vi/${id}/mqdefault.jpg"></div><div class="thumb-title" data-id="${id}">Carregando...</div>`;
+    div.onclick = () => { player.src = `https://www.youtube.com/embed/${id}?autoplay=1`; window.scrollTo({ top: 0, behavior: "smooth" }); };
+    container.appendChild(div);
+    if (!titulosCache[id]) {
+      buscarTitulo(id).then(t => { const el = container.querySelector(`.thumb-title[data-id="${id}"]`); if (el) el.textContent = t; });
+    } else {
+      div.querySelector(".thumb-title").textContent = titulosCache[id];
+    }
+  });
+}
+
+document.querySelectorAll(".btn-vermais").forEach(btn => {
+  const container = document.getElementById("thumbs" + btn.dataset.target);
+  btn.addEventListener("click", () => {
+    const hidden = container.querySelectorAll(".thumb.hidden");
+    if (hidden.length > 0) { hidden.forEach(t => t.classList.remove("hidden")); btn.textContent = "Ver menos ▲"; }
+    else { container.querySelectorAll(".thumb").forEach((t, i) => { if (i >= 3) t.classList.add("hidden"); }); btn.textContent = "Ver mais ▼"; }
+  });
+});
+
+aplicarPrincipal();
+aplicarLogo();
+renderVideos("thumbs1", "player1");
+renderVideos("thumbs2", "player2");
+
+function renderSocials(containerId) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = "";
+  socialLinks.forEach(s => {
+    const a = document.createElement("a");
+    a.href = s.url; a.target = "_blank"; a.className = "social-btn";
+    const rede = REDES[s.tipo];
+    const cor = s.cor || (rede ? rede.cor : "#00ff80");
+    const estilo = s.estilo || "transparente";
+    if (estilo === "solido") {
+      a.style.background = cor; a.style.borderColor = cor; a.style.color = "#fff";
+    } else {
+      a.style.background = cor + "10"; a.style.borderColor = cor; a.style.color = cor; a.style.boxShadow = `0 0 15px ${cor}30`;
+    }
+    if (s.tipo === "outros") {
+      a.innerHTML = `${s.logoUrl ? `<img src="${s.logoUrl}">` : "🔗"} ${s.nome}`;
+    } else {
+      if (!rede) return;
+      a.innerHTML = `${rede.svg} ${s.nome}`;
+    }
+    c.appendChild(a);
+  });
+}
+
+renderSocials("socials1");
+renderSocials("socials2");
+
+function trocarPagina(paginaSaindo, paginaEntrando) {
+  document.querySelectorAll(".page").forEach(p => {
+    if (p !== paginaEntrando) { p.classList.remove("active","saindo","entrando"); p.style.display = "none"; p.style.opacity = ""; p.style.transform = ""; p.style.position = ""; p.style.left = ""; p.style.right = ""; }
+  });
+  paginaEntrando.style.display = "block";
+  paginaEntrando.classList.remove("saindo");
+  paginaEntrando.classList.add("entrando");
+  requestAnimationFrame(() => { requestAnimationFrame(() => { paginaEntrando.classList.remove("entrando"); paginaEntrando.classList.add("active"); }); });
+  if (paginaSaindo && paginaSaindo !== paginaEntrando) {
+    paginaSaindo.classList.add("saindo");
+    paginaSaindo.classList.remove("active");
+    setTimeout(() => { paginaSaindo.classList.remove("saindo"); paginaSaindo.style.display = "none"; }, 900);
+  }
+}
+
+function criarItemDownload(dl, pagina1 = false) {
+  const item = document.createElement("div");
+  item.className = "download-item";
+  const nome = document.createElement("div");
+  nome.className = "download-name";
+  nome.textContent = dl.nome;
+  const btn = document.createElement("button");
+  btn.className = "btn-download";
+  btn.innerHTML = `${svgCadeado} <span>Download</span>`;
+  btn.onclick = () => {
+    if (pagina1 && anunciosDownloadP1Ativos && anunciosDownloadP1.length) {
+      const linkAnuncio = anunciosDownloadP1[Math.floor(Math.random() * anunciosDownloadP1.length)];
+      let voltouDaPropaganda = false;
+      const iniciarAoVoltar = () => {
+        if (voltouDaPropaganda) return;
+        voltouDaPropaganda = true;
+        window.removeEventListener("focus", iniciarAoVoltar);
+        document.removeEventListener("visibilitychange", verificarVisibilidade);
+        prepararBotaoIniciarDownload(dl, btn);
+      };
+      const verificarVisibilidade = () => {
+        if (document.visibilityState === "visible") iniciarAoVoltar();
+      };
+      window.addEventListener("focus", iniciarAoVoltar);
+      document.addEventListener("visibilitychange", verificarVisibilidade);
+      const janelaPropaganda = window.open(linkAnuncio, "_blank", "noopener");
+      // Se o navegador bloquear a abertura, não deixa o botão travado.
+      if (!janelaPropaganda) iniciarAoVoltar();
+      return;
+    }
+    iniciarProgressoBotao(dl, btn);
+  };
+  item.appendChild(nome); item.appendChild(btn);
+  return item;
+}
+
+function prepararBotaoIniciarDownload(dl, btn) {
+  btn.classList.remove("progress-mode", "running");
+  btn.innerHTML = `<span>Iniciar download</span>`;
+  btn.onclick = () => iniciarProgressoBotao(dl, btn);
+}
+
+function iniciarProgressoBotao(dl, btn) {
+  if (btn.classList.contains("progress-mode")) return;
+  const segundos = Math.floor(Math.random() * 3) + 5;
+  btn.classList.add("progress-mode", "running");
+  btn.innerHTML = `<div class="progress-fill-btn"></div><div class="progress-label-btn">Aguarde... ${segundos}s</div>`;
+  const fill = btn.querySelector(".progress-fill-btn");
+  const label = btn.querySelector(".progress-label-btn");
+  let passados = 0;
+  const timer = setInterval(() => {
+    passados++;
+    fill.style.width = Math.min(100, (passados / segundos) * 100) + "%";
+    const falta = segundos - passados;
+    if (falta > 0) { label.textContent = `Aguarde... ${falta}s`; }
+    else {
+      clearInterval(timer);
+      label.textContent = "Baixando...";
+      setTimeout(() => irParaContagem(dl), 1000);
+    }
+  }, 1000);
+}
+
+function renderDownloadsPage1() {
+  const c = document.getElementById("downloadsList1"); c.innerHTML = "";
+  downloads.forEach(dl => c.appendChild(criarItemDownload(dl, true)));
+}
+
+function renderDownloadsPage2(excluirId) {
+  const c = document.getElementById("downloadsList2"); c.innerHTML = "";
+  const outros = downloads.filter(d => d.id !== excluirId);
+  if (outros.length === 0) { c.innerHTML = `<p style="color:#9fdcb0;font-size:0.9rem;text-align:center;">Nenhum outro download disponível.</p>`; return; }
+  outros.forEach(dl => c.appendChild(criarItemDownload(dl)));
+}
+
+let downloadAtual = null, contagemEmAndamento = false, jaAbriuLinkDownload = false;
+const progressWrap = document.getElementById("progressWrap");
+const progressFill = document.getElementById("progressFill");
+const progressLabel = document.getElementById("progressLabel");
+const nomeArquivo = document.getElementById("nomeArquivo");
+
+function irParaContagem(dl) {
+  downloadAtual = dl; jaAbriuLinkDownload = false; contagemEmAndamento = false;
+  nomeArquivo.textContent = dl.nome;
+  progressFill.style.width = "0%";
+  progressWrap.classList.remove("running", "waiting");
+  progressWrap.style.cursor = "pointer";
+  progressLabel.textContent = "Download";
+  renderDownloadsPage2(dl.id);
+  trocarPagina(document.getElementById("page1"), document.getElementById("page2"));
+  window.scrollTo({ top: 0 });
+  setTimeout(() => renderDownloadsPage1(), 900);
+}
+
+function voltarPagina1(e) {
+  e.preventDefault(); if (contagemEmAndamento) return;
+  renderDownloadsPage1();
+  trocarPagina(document.getElementById("page2"), document.getElementById("page1"));
+  window.scrollTo({ top: 0 });
+}
+
+progressWrap.addEventListener("click", () => {
+  if (contagemEmAndamento || !downloadAtual) return;
+  if (!linksDownloadAtivos || !linksDownload.length) {
+    progressWrap.classList.remove("waiting");
+    progressWrap.classList.add("running");
+    progressWrap.style.cursor = "default";
+    iniciarContagem();
+    return;
+  }
+  if (!jaAbriuLinkDownload) {
+    const aleatorio = linksDownload[Math.floor(Math.random() * linksDownload.length)];
+    window.open(aleatorio, "_blank");
+    jaAbriuLinkDownload = true;
+    progressLabel.textContent = "Iniciar download";
+    progressWrap.classList.add("waiting");
+  } else {
+    progressWrap.classList.remove("waiting");
+    progressWrap.classList.add("running");
+    progressWrap.style.cursor = "default";
+    iniciarContagem();
+  }
+});
+
+function iniciarContagem() {
+  contagemEmAndamento = true;
+  const segundos = Math.floor(Math.random() * 3) + 5;
+  progressFill.style.transition = "width 0.9s linear";
+  progressFill.style.width = "0%";
+  setTimeout(() => { progressFill.style.width = (100 / segundos) + "%"; }, 50);
+  let passados = 0;
+  const timer = setInterval(() => {
+    passados++;
+    progressFill.style.width = Math.min(100, (passados / segundos) * 100) + "%";
+    const falta = segundos - passados;
+    if (falta > 0) { progressLabel.textContent = `Aguarde... ${falta}s`; }
+    else {
+      clearInterval(timer);
+      progressLabel.textContent = "Baixando...";
+      setTimeout(() => {
+        window.location.href = downloadAtual.linkFinal;
+        contagemEmAndamento = false; jaAbriuLinkDownload = false;
+        progressFill.style.width = "0%"; progressLabel.textContent = "Download";
+        progressWrap.classList.remove("running"); progressWrap.style.cursor = "pointer";
+      }, 1000);
+    }
+  }, 1000);
+}
+
+renderDownloadsPage1();
+</script>
 </body>
 </html>
